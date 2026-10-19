@@ -220,6 +220,17 @@
     .field textarea { min-height: 112px; resize: vertical; }
     .contact-form .button { width: 100%; margin-top: 3px; }
     .form-footnote { margin-top: 12px; color: #7a837c; font-size: .75rem; text-align: center; }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .contact-action { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 45px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--forest); font-size: .86rem; font-weight: 800; transition: transform .2s ease, box-shadow .2s ease; }
+    .contact-action:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(23,45,31,.09); }
+    .contact-action svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .contact-action.whatsapp { color: #147b43; border-color: rgba(37,211,102,.35); }
+    .contact-action[hidden] { display: none !important; }
+    .floating-whatsapp { position: fixed; z-index: 120; right: 22px; bottom: 22px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #25d366; box-shadow: 0 10px 28px rgba(12,90,44,.28); transition: transform .2s ease; }
+    .floating-whatsapp:hover { transform: translateY(-3px) scale(1.03); }
+    .floating-whatsapp svg { width: 29px; height: 29px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .floating-whatsapp[hidden] { display: none !important; }
+    @media (max-width: 440px) { .contact-actions { flex-direction: column; } .contact-action { width: 100%; } .floating-whatsapp { right: 15px; bottom: 15px; width: 54px; height: 54px; } }
     .footer { background: #102d1f; color: rgba(255,255,255,.78); }
     .footer-main { display: grid; grid-template-columns: 1.35fr .8fr .9fr; gap: 50px; padding: 58px 0 44px; }
     .footer .brand { color: white; }
@@ -522,6 +533,20 @@
                 <div><strong>Business enquiries</strong><span>Use the enquiry form to share your requirements.</span></div>
               </div>
             </div>
+            <div class="contact-actions" aria-label="Direct contact options">
+              <a class="contact-action whatsapp" id="whatsapp-contact" href="#contact" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-4.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 9.5c.5 2 2 3.5 4 4"/></svg>
+                WhatsApp
+              </a>
+              <a class="contact-action" id="phone-contact" href="#contact" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 11.2 19a19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.8 2.1Z"/></svg>
+                Call now
+              </a>
+              <a class="contact-action" id="email-contact" href="#contact" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="m3 7 9 7 9-7"/></svg>
+                Email us
+              </a>
+            </div>
           </div>
           <form class="contact-form" name="tcl-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?enquiry=sent#contact">
             <input type="hidden" name="form-name" value="tcl-enquiry">
@@ -596,8 +621,47 @@
     </div>
   </footer>
 
+  <a class="floating-whatsapp" id="floating-whatsapp" href="#contact" aria-label="Chat with TCL Traders on WhatsApp" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-4.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 9.5c.5 2 2 3.5 4 4"/></svg>
+  </a>
+
   <script>
     (function () {
+      // Fill these in with TCL Traders' verified business contact details.
+      // Keep the phone numbers in international format, e.g. +919876543210.
+      const CONTACT = {
+        whatsapp: "",
+        phone: "",
+        email: ""
+      };
+      const digits = (value) => String(value || "").replace(/\\D/g, "");
+      const waNumber = digits(CONTACT.whatsapp || CONTACT.phone);
+      const phoneNumber = String(CONTACT.phone || "").replace(/[^+\\d]/g, "");
+      const whatsappMessage = encodeURIComponent("Hello TCL Traders, I would like to enquire about your coconut products.");
+      const whatsappHref = waNumber ? "https://wa.me/" + waNumber + "?text=" + whatsappMessage : "";
+      const whatsappLink = document.querySelector("#whatsapp-contact");
+      const floatingWhatsapp = document.querySelector("#floating-whatsapp");
+      if (whatsappHref) {
+        whatsappLink.href = whatsappHref;
+        whatsappLink.target = "_blank";
+        whatsappLink.rel = "noopener noreferrer";
+        whatsappLink.hidden = false;
+        floatingWhatsapp.href = whatsappHref;
+        floatingWhatsapp.target = "_blank";
+        floatingWhatsapp.rel = "noopener noreferrer";
+        floatingWhatsapp.hidden = false;
+      }
+      const phoneLink = document.querySelector("#phone-contact");
+      if (phoneNumber) {
+        phoneLink.href = "tel:" + phoneNumber;
+        phoneLink.hidden = false;
+      }
+      const emailLink = document.querySelector("#email-contact");
+      if (CONTACT.email && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(CONTACT.email)) {
+        emailLink.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent("Business enquiry - TCL Traders");
+        emailLink.hidden = false;
+      }
+
       const menuToggle = document.querySelector(".menu-toggle");
       const nav = document.querySelector("#primary-navigation");
 
