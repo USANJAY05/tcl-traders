@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
