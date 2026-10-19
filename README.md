@@ -31,6 +31,18 @@ The enquiry form uses Netlify Forms markup. Enable form detection for the site a
 ### GitHub Pages
 The workflow in `.github/workflows/deploy-pages.yml` can publish the static site from `main`, but GitHub's repository settings must be enabled once by an owner: open **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions**, and save. The connected workflow token cannot create the Pages site before that setting is enabled. After saving, rerun the workflow from the **Actions** tab. Note: GitHub Pages is static hosting and does not process Netlify Forms submissions; use Netlify hosting for the enquiry form unless you configure another form backend.
 
+## SEO implemented
+
+- Unique page title and meta description focused on coconut supply/manufacturing in Tamil Nadu
+- Canonical URL, robots directives, Open Graph metadata and Twitter card metadata
+- JSON-LD Organization structured data with verified available business details
+- SVG favicon and refreshed TCL globe logo
+- `robots.txt` and `sitemap.xml`
+
+After the final production domain is confirmed, update the canonical URL, Open Graph URL, structured-data URLs, and sitemap URL in the site files if it differs from `https://tcltraders.netlify.app/`. Then verify the domain in Google Search Console, submit `https://tcltraders.netlify.app/sitemap.xml`, and use URL Inspection to request indexing. SEO changes do not guarantee rankings or immediate indexing.
+
+The logo update keeps the TCL-inside-a-globe idea and removes unrelated import/export and truck elements. The original deployed site's source/logo asset could not be retrieved for pixel-by-pixel comparison, so verify the logo against the platform's original artwork before treating it as an exact reproduction.
+
 ## Content accuracy
 
 The website uses business facts available from the public TCL Traders profile: manufacturer/exporter, coconuts and coconut products, establishment in 2019, and the Thiruppuvanam address. No phone number or email address was added because a verified business contact address was not available during this rebuild. Product photography is served from Unsplash and requires an internet connection.
