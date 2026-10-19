@@ -29,7 +29,7 @@ The included `netlify.toml` publishes the repository root. In Netlify, connect t
 The enquiry form uses Netlify Forms markup. Enable form detection for the site and submit a test enquiry after deploying before using it for business.
 
 ### GitHub Pages
-The workflow in `.github/workflows/deploy-pages.yml` publishes the static site from `main`. If needed, set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. GitHub Pages will then publish the site at the repository's Pages URL.
+The workflow in `.github/workflows/deploy-pages.yml` can publish the static site from `main`, but GitHub's repository settings must be enabled once by an owner: open **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions**, and save. The connected workflow token cannot create the Pages site before that setting is enabled. After saving, rerun the workflow from the **Actions** tab. Note: GitHub Pages is static hosting and does not process Netlify Forms submissions; use Netlify hosting for the enquiry form unless you configure another form backend.
 
 ## Content accuracy
 
