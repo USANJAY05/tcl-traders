@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tcltraders.netlify.app/sitemap.xml
