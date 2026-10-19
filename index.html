@@ -634,9 +634,9 @@
         phone: "",
         email: ""
       };
-      const digits = (value) => String(value || "").replace(/\\D/g, "");
+      const digits = (value) => String(value || "").replace(/\D/g, "");
       const waNumber = digits(CONTACT.whatsapp || CONTACT.phone);
-      const phoneNumber = String(CONTACT.phone || "").replace(/[^+\\d]/g, "");
+      const phoneNumber = String(CONTACT.phone || "").replace(/[^+\d]/g, "");
       const whatsappMessage = encodeURIComponent("Hello TCL Traders, I would like to enquire about your coconut products.");
       const whatsappHref = waNumber ? "https://wa.me/" + waNumber + "?text=" + whatsappMessage : "";
       const whatsappLink = document.querySelector("#whatsapp-contact");
@@ -657,7 +657,7 @@
         phoneLink.hidden = false;
       }
       const emailLink = document.querySelector("#email-contact");
-      if (CONTACT.email && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(CONTACT.email)) {
+      if (CONTACT.email && /^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(CONTACT.email)) {
         emailLink.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent("Business enquiry - TCL Traders");
         emailLink.hidden = false;
       }
